@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
-
+<c:set value="${sessionScope.mem }" var="mem"/>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -56,12 +57,6 @@
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
           </div>
           <ul class="navbar-nav  justify-content-end">
-            <li class="nav-item d-flex align-items-center">
-              <a href="" class="nav-link text-body font-weight-bold px-0">
-                <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">로그인</span>
-              </a>
-            </li>
 			<li class="nav-item d-flex align-items-center">　</li>
 			<li class="nav-item">
 			  <div class="d-flex align-items-center justify-content-between">
@@ -73,13 +68,13 @@
 			<li class="nav-item d-flex align-items-center">　</li>
 			<li class="nav-item d-flex align-items-center">
 				<div class="d-flex flex-column justify-content-center">
-				  <h6 class="mb-0 text-sm">304호반장</h6>
-				  <p class="text-xs text-secondary mb-0">Leader-Park@ddit.or.kr</p>
-				</div>
+				  <h6 class="mb-0 text-sm">${mem.memName }</h6>
+				  <p class="text-xs text-secondary mb-0">${mem.memEmail }</p>
+				</div>	
 			</li>
 			<li class="nav-item d-flex align-items-center">　</li>
 			<li class="nav-item d-flex align-items-center">
-              <a href="" class="nav-link text-body font-weight-bold px-0">
+              <a href="/pages/logout" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
                 <span class="d-sm-inline d-none">로그아웃</span>
               </a>
@@ -194,6 +189,19 @@ $(function(){
 	$("#listBtn").on("click", function(){
 		location.href = "/board/list";
 	})
+	
+	$("#modifyBtn").on("click", function(){
+		location.href = "/board/modify?boNo=" + ${board.bono};
+	})
+	
+	$("#delBtn").on("click", function(){
+		if(confirm("정말로 삭제하시겠습니까?")){
+			location.href = "/board/delete?boNo=" + ${board.bono};
+		}
+	})
+	if("${error}" == "error"){
+		alert("삭제실패! 다시 시도해주세요");
+	}
 })
 </script>
 </html>

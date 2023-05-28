@@ -15,4 +15,10 @@ public interface IBoardDAO {
 
 	public void updateHit(int boNo);
 
+	public int insertBoard(BoardVO board);
+
+	public int updateBoard(BoardVO board);
+
+	public int deleteBoard(int boNo);
+
 }

@@ -49,4 +49,26 @@
  	<update id="updateHit" parameterType="int">
  		update board set bohit = bohit + 1 where bono = #{boNo}
  	</update>
+ 	
+ 	<insert id="insertBoard" parameterType="boardVO" useGeneratedKeys="true">
+ 		<selectKey keyProperty="bono" order="BEFORE" resultType="int">
+ 			select seq_board.nextval from dual
+ 		</selectKey>
+ 		insert into board(
+			bono, botitle, bocontent, bowriter, bodate
+		)values(
+			#{bono}, #{botitle}, #{bocontent}, #{bowriter}, sysdate
+		) 	
+ 	</insert>
+ 	
+ 	<update id="updateBoard" parameterType="boardVO">
+ 		update board set botitle = #{botitle},
+ 						bocontent = #{bocontent},
+ 						bodate = sysdate
+ 				where bono = #{bono}
+ 	</update>
+ 	
+ 	<delete id="deleteBoard" parameterType="int">
+ 		delete from board where bono = #{boNo}
+ 	</delete>
  </mapper>

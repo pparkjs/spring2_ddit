@@ -1,7 +1,6 @@
 package kr.or.ddit.controller;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
@@ -9,14 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.ddit.ServiceResult;
 import kr.or.ddit.service.member.IMemberService;
-import kr.or.ddit.vo.BoardVO;
 import kr.or.ddit.vo.MemberVO;
-import kr.or.ddit.vo.PaginationInfoVO;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -40,8 +36,13 @@ public class MemberController {
 	@RequestMapping(value="/join", method = RequestMethod.POST)
 	public String join(MemberVO mem, Model model, RedirectAttributes msg) {
 		String goPage = "";
-		log.info("mem_agree : " + mem.getMemAgree());
-		log.info("mem_gender : " + mem.getMemGender());
+		log.info("memAgree: " + mem.getMemAgree());
+		log.info("memGender: " + mem.getMemGender());
+		log.info("memId: " + mem.getMemId());
+		log.info("memName: " + mem.getMemName());
+		log.info("memNo : " + mem.getMemNo());
+		log.info("memPhone : " + mem.getMemPhone());
+		log.info("memPw : " + mem.getMemPw());
 		// 데이터가 하나라도 누락된 경우
 		if(StringUtils.isBlank(mem.getMemAgree()) || StringUtils.isBlank(mem.getMemId()) ||
 		   StringUtils.isBlank(mem.getMemPw()) || StringUtils.isBlank(mem.getMemName()) ||
