@@ -258,6 +258,10 @@ $(function(){
 		var boNo = $(this).attr("id")
 		location.href = "/board/detail?boNo=" + boNo;
 	})
+	
+	$("#insertBtn").on("click", function(){
+		location.href = "/board/insert";
+	})
 })
 </script>
 </html>

@@ -36,4 +36,19 @@ public class BoardDAOImpl implements IBoardDAO {
 		sqlSession.update("Board.updateHit", boNo);
 	}
 
+	@Override
+	public int insertBoard(BoardVO board) {
+		return sqlSession.insert("Board.insertBoard", board);
+	}
+
+	@Override
+	public int updateBoard(BoardVO board) {
+		return sqlSession.insert("Board.updateBoard", board);
+	}
+
+	@Override
+	public int deleteBoard(int boNo) {
+		return sqlSession.delete("Board.deleteBoard", boNo);
+	}
+
 }

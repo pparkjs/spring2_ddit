@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
-
+<c:set value="${sessionScope.mem }" var="mem"/>
+<c:set value="등록" var="name"/>
+<c:if test="${status == 'u'}">
+	<c:set value="수정" var="name"/>
+</c:if>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -56,12 +61,6 @@
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
           </div>
           <ul class="navbar-nav  justify-content-end">
-            <li class="nav-item d-flex align-items-center">
-              <a href="" class="nav-link text-body font-weight-bold px-0">
-                <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">로그인</span>
-              </a>
-            </li>
 			<li class="nav-item d-flex align-items-center">　</li>
 			<li class="nav-item">
 			  <div class="d-flex align-items-center justify-content-between">
@@ -73,13 +72,13 @@
 			<li class="nav-item d-flex align-items-center">　</li>
 			<li class="nav-item d-flex align-items-center">
 				<div class="d-flex flex-column justify-content-center">
-				  <h6 class="mb-0 text-sm">304호반장</h6>
-				  <p class="text-xs text-secondary mb-0">Leader-Park@ddit.or.kr</p>
+				  <h6 class="mb-0 text-sm">${mem.memName }</h6>
+				  <p class="text-xs text-secondary mb-0">${mem.memEmail }</p>
 				</div>
 			</li>
 			<li class="nav-item d-flex align-items-center">　</li>
 			<li class="nav-item d-flex align-items-center">
-              <a href="" class="nav-link text-body font-weight-bold px-0">
+              <a href="/pages/logout" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
                 <span class="d-sm-inline d-none">로그아웃</span>
               </a>
@@ -102,23 +101,36 @@
       </div>
       <div class="card card-body mx-3 mx-md-4 mt-n6">
         <div class="row gx-4 mb-2">
-		  <div class="col-md-12">
-			<div class="input-group input-group-outline mb-4">
-			  <label class="form-label">제목을 입력해주세요.</label>
-			  <input type="text" class="form-control">
-			</div>
-		  </div>
-		  <div class="col-md-12">
-		    <div class="input-group input-group-outline mb-4">
-			  <textarea class="form-control" rows="20"></textarea>
-		    </div>
-		  </div>
-		  <div class="col-md-12">　</div>
-		  <div class="col-md-12">
-		    <button type="button" class="btn btn-primary">등록</button>
-		    <button type="button" class="btn btn-danger">취소</button>
-		    <button type="button" class="btn btn-info">목록</button>
-		  </div>
+	        <form method="post">
+	 		  <input type="hidden" name="bowriter" value="${mem.memName}">
+	 		  <c:if test="${status == 'u' }">
+		 		  <input type="hidden" name="bono" value="${board.bono}">
+	 		  </c:if>
+			  <div class="col-md-12">
+				<div class="input-group input-group-outline mb-4">
+				  <label class="form-label">제목을 입력해주세요.</label>
+				  <input type="text" id="botitle" name="botitle" class="form-control" value="${board.botitle }">
+				</div>
+			  </div>
+			  <div class="col-md-12">
+			    <div class="input-group input-group-outline mb-4">
+				  <textarea name="bocontent" id="bocontent"  class="form-control" rows="20">${board.bocontent }</textarea>
+			    </div>
+			  </div>
+			  <div class="col-md-12">　</div>
+			  <div class="col-md-12">
+			    <button type="button" id="formBtn" class="btn btn-primary">${name }</button>
+			    
+			    <c:choose>
+				    <c:when test="${status == 'u' }">
+					    <button type="button" value="취소" class="btn btn-info backBtn">취소</button>
+				    </c:when>
+				    <c:otherwise>
+					    <button type="button" value="목록" class="btn btn-info backBtn">목록</button>
+				    </c:otherwise>
+				</c:choose>
+			  </div>
+			</form>
         </div>
       </div>
     </div>
@@ -185,6 +197,58 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/material-dashboard.min.js?v=3.0.4"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 </body>
+<script>
+$(function(){
+	CKEDITOR.replace("bocontent")
+	CKEDITOR.config.allowedContent = true;
+	
+	$("#formBtn").on("click", function(){
+		var botitle = $("#botitle").val();
+		var bocontent = CKEDITOR.instances.bocontent.getData();
+		
+		if(botitle == ''){
+			alert("제목을 입력해주세요!!");
+			$("#botitle").focus();
+			return false;
+		}
+		
+		if(bocontent == ''){
+			alert("내용을 입력해주세요!!");
+			$("#bocontent").focus();
+			return false;
+		}
+		
+		if($(this).val() == '수정'){
+			$("form").attr("action", "/board/modify")
+		}
+		
+		$("form").submit();
+	})
+	
+	$(".backBtn").on("click", function(){
+		var btnStatus = $(this).val();
+		
+		if(btnStatus == "취소"){
+			location.href = "/board/detail?boNo=${board.bono}";
+		}
+		
+		if(btnStatus == "목록"){
+			location.href = "/board/list";
+		}
+	})
+	
+	
+	if("${error}" == "error"){
+		alert("게시글 등록 실패!!");
+	}
+	
+	if("${miss}" == "miss"){
+		alert("제목 또는 내용이 누락되었습니다.")
+	}
+})
+</script>
 
 </html>

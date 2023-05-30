@@ -44,11 +44,11 @@
                   <form role="form" action="/pages/join" method="post">
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">아이디</label>
-                      <input type="text" class="form-control" name="mem_id" id="userId" value="${mem.memId }">
+                      <input type="text" class="form-control" name="memId" id="userId" value="${mem.memId }">
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">비밀번호</label>
-                      <input type="text" class="form-control" name="mem_pw" id="userPw" value="${mem.memPw }">
+                      <input type="text" class="form-control" name="memPw" id="userPw" value="${mem.memPw }">
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">비밀번호 재입력</label>
@@ -56,24 +56,24 @@
                     </div>
 					<div class="input-group input-group-outline mb-3">
                       <label class="form-label">이름</label>
-                      <input type="text" class="form-control" name="mem_name" id="userName" value="${mem.memName }">
+                      <input type="text" class="form-control" name="memName" id="userName" value="${mem.memName }">
                     </div>
 					<div class="form-check mb-3">
-					  <input class="form-check-input" type="radio" name="mem_gender" id="customRadio1" value="M" checked>
+					  <input class="form-check-input" type="radio" name="memGender" id="customRadio1" value="M" checked>
 					  <label class="custom-control-label" for="customRadio1">남자</label>
-					  <input class="form-check-input" type="radio" name="mem_gender" id="customRadio1" value="F">
+					  <input class="form-check-input" type="radio" name="memGender" id="customRadio1" value="F">
 					  <label class="custom-control-label" for="customRadio1">여자</label>
 					</div>
 					<div class="input-group input-group-outline mb-3">
                       <label class="form-label">핸드폰번호</label>
-                      <input type="text" class="form-control" name="mem_phone" id="userPhone" value="${mem.memPhone }">
+                      <input type="text" class="form-control" name="memPhone" id="userPhone" value="${mem.memPhone }">
                     </div>
 					<div class="input-group input-group-outline mb-3">
                       <label class="form-label">이메일</label>
-                      <input type="text" class="form-control" name="mem_email" id="userEmail" value="${mem.memEmail }">
+                      <input type="text" class="form-control" name="memEmail" id="userEmail" value="${mem.memEmail }">
                     </div>
                     <div class="form-check form-switch">
-					  <input class="form-check-input" type="checkbox" name="mem_agree" id="aggreeCheck" checked="">
+					  <input class="form-check-input" type="checkbox" name="memAgree" id="aggreeCheck" checked="">
 					  <label class="form-check-label" for="aggreeCheck">개인정보 동의</label>
 					  <p class="mb-2 text-sm mx-auto">
 						개인정보 동의  
