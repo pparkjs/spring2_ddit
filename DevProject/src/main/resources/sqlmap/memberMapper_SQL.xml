@@ -54,4 +54,24 @@
  		from member m left outer join member_auth a on(m.user_no = a.user_no)
  		where m.user_no = #{userNo}
  	</select>
+ 	
+ 	<!-- 회원 테이블 수정하기 쿼리 -->
+ 	<update id="modify" parameterType="memberVO">
+ 		update member
+ 		set
+ 			user_name = #{userName}
+ 		where user_no = #{userNo}
+ 	</update>
+ 	
+ 	<!-- 회원의 권한 삭제 -->
+ 	<delete id="deleteAuth" parameterType="int">
+ 		delete from member_auth
+ 		where user_no = #{userNo}
+ 	</delete>
+ 	
+ 	<!-- 회원 삭제  -->
+ 	<delete id="delete" parameterType="int">
+ 		delete from member
+ 		where user_no = #{userNo}
+ 	</delete>
  </mapper>
