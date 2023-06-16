@@ -25,6 +25,7 @@
 	<typeAlias type="kr.or.ddit.vo.Item2" alias="item2"/>
 	<typeAlias type="kr.or.ddit.vo.Item3" alias="item3"/>
 	<typeAlias type="kr.or.ddit.vo.DDITMemberVO" alias="dditmemberVO"/>
+	<typeAlias type="kr.or.ddit.vo.DDITMemberAuthVO" alias="dditmemberAuthVO"/>
 	<typeAlias type="kr.or.ddit.vo.NoticeFileVO" alias="noticefileVO"/>
 	</typeAliases>
 </configuration>

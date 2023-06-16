@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,10 +63,14 @@ public class NoticeInsertController {
 			model.addAttribute("noticeVO", noticeVO);
 			goPage = "notice/form";
 		}else {
-			HttpSession session = req.getSession();
-			DDITMemberVO memberVO = (DDITMemberVO) session.getAttribute("SessionInfo");
-			if(memberVO != null) {
-				noticeVO.setBoWriter(memberVO.getMemId()); // 로그인 한 상용자 아이디로 작성자 셋팅
+//			HttpSession session = req.getSession();
+//			DDITMemberVO memberVO = (DDITMemberVO) session.getAttribute("SessionInfo");
+//			if(memberVO != null) {
+//				noticeVO.setBoWriter(memberVO.getMemId()); // 로그인 한 상용자 아이디로 작성자 셋팅
+			
+				User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+				
+				noticeVO.setBoWriter(user.getUsername()); // 로그인 한 상용자 아이디로 작성자 셋팅
 				ServiceResult result = noticeService.insertNotice(req, noticeVO);
 				if(result.equals(ServiceResult.OK)) {
 					goPage = "redirect:/notice/detail.do?boNo="+noticeVO.getBoNo();
@@ -72,10 +78,10 @@ public class NoticeInsertController {
 					model.addAttribute("message", "서버에러, 다시 시도해주세요!");
 					goPage = "notice/form";
 				}
-			}else {
-				ra.addFlashAttribute("message","로그인 후에 사용 가능합니다.");
-				goPage = "redirect:/notice/login.do";
-			}
+//			}else {
+//				ra.addFlashAttribute("message","로그인 후에 사용 가능합니다.");
+//				goPage = "redirect:/notice/login.do";
+//			}
 		}
 		return goPage;
 	}
