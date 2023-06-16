@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.ddit.mapper.LoginMapper">
+ 
+ 	<!-- 아이디 중복 체크 쿼리 -->
+ 	<select id="idCheck" parameterType="string" resultType="dditmemberVO">
+ 		select mem_no, mem_id
+ 		from dditmember
+ 		where mem_id = #{mem_id}
+ 	</select>
+ 	
+ 	<!-- 회원가입 처리하는 쿼리 -->
+ 	<insert id="signup" parameterType="dditmemberVO" useGeneratedKeys="true">
+ 		<selectKey keyProperty="memNo" resultType="int" order="BEFORE">
+ 			select seq_dditmember.nextval from dual
+ 		</selectKey>
+ 		insert into dditmember(
+ 			mem_no, mem_id, mem_pw, mem_name,
+ 			mem_gender, mem_email, mem_phone,
+ 			mem_postcode, mem_address1, mem_address2,
+ 			mem_agree, mem_profileimg, mem_regdate
+ 		)values(
+ 		 	#{memNo}, #{memId}, #{memPw}, #{memName},
+ 			#{memGender}, #{memEmail}, #{memPhone},
+ 			#{memPostCode}, #{memAddress1}, #{memAddress2},
+ 			#{memAgree}, #{memProfileImg}, sysdate
+ 		)
+ 		
+ 	</insert>
+ 	
+ 	<!-- 로그인 체크하는 쿼리 -->
+ 	<select id="loginCheck" parameterType="dditmemberVO" resultType="dditmemberVO">
+ 		select
+ 			mem_no, mem_id, mem_pw, mem_name,
+ 			mem_gender, mem_email, mem_phone,
+ 			mem_postcode, mem_address1, mem_address2,
+ 			mem_agree, mem_profileimg, mem_regdate
+ 		from dditmember
+ 		where mem_id = #{memId}
+ 		and mem_pw = #{memPw}	
+ 	</select>
+ 	
+ 	<!-- 아이디 찾기 -->
+ 	<select id="idForgetProcess" parameterType="dditmemberVO" resultType="string">
+ 		select mem_id from dditmember
+ 		where mem_email = #{memEmail}
+ 		and mem_name = #{memName}
+ 	</select>
+ 	
+ 	<!-- 비밀번호 찾기 -->
+ 	 <select id="pwForgetProcess" parameterType="dditmemberVO" resultType="string">
+ 		select mem_pw from dditmember
+ 		where mem_email = #{memEmail}
+ 		and mem_name = #{memName}
+ 		and mem_id = #{memId}
+ 	 </select>
+ </mapper>

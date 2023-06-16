@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="kr.or.ddit.mapper.ItemMapper2">
+ 	
+ 	 <!-- 파일 목록 출력하는 쿼리 -->
+ 	<select id="list" resultType="item">
+ 		select
+ 			item_id, item_name, price, description, picture_url, picture_url2
+ 		from item2
+ 		order by item_id desc
+ 	</select>
+ 	
+ 	<!-- 다중 파일 등록하기 -->
+ 	<insert id="register" parameterType="item2">
+ 		insert into item2(
+ 			item_id, item_name, price, description, picture_url, picture_url2
+ 		) values (
+ 			seq_item2.nextval, #{itemName}, #{price}, #{description}, #{pictureUrl}, #{pictureUrl2}
+ 		)
+ 	</insert>
+ 	
+ 	 	<!-- 해당 번호에 대한 상품 정보 가져오기 -->
+ 	<select id="read" parameterType="int" resultType="item2">
+ 		select
+ 			item_id, item_name, price, description, picture_url, picture_url2
+ 		from item2
+ 		where item_id = #{itemId}
+ 	</select>
+ 	
+ 	<!-- 사진 이름 가져오기 -->
+ 	<select id="getPicture" parameterType="int" resultType="string">
+ 		select picture_url
+ 		from item2
+ 		where item_id = #{itemId}
+ 	</select>
+ 	
+ 	<!-- 사진 이름 가져오기2 -->
+ 	<select id="getPicture2" parameterType="int" resultType="string">
+ 		select picture_url2
+ 		from item2
+ 		where item_id = #{itemId}
+ 	</select>
+ 	
+ 	<!-- 수정하기 처리하는 쿼리 -->
+ 	<update id="modify" parameterType="item2">
+ 		update item2
+ 		set
+ 			item_name = #{itemName},
+ 			price = #{price},
+ 			description = #{description},
+ 			picture_url = #{pictureUrl},
+ 			picture_url2 = #{pictureUrl2}
+ 		where item_id = #{itemId}
+ 	</update>
+ 	
+ 	<!-- 삭제하기 쿼리 -->
+ 	<delete id="remove" parameterType="int">
+ 		delete from item2
+ 		where item_id = #{itemId}
+ 	</delete>
+ </mapper>
